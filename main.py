@@ -15,43 +15,70 @@ relatives = {
     "G#": "Fm"
 }
 
-notes = str(input("Notes: "))
-fromTone = str(input("From tone: "))
-toTone = str(input("To tone: "))
+print("(1) - Transpose")
+print("(2) - Capo")
+r = int(input("R: "))
 
-notes = notes.split(", ")
+if r == 1:
+    notes = str(input("Notes: "))
+    fromTone = str(input("From tone: "))
+    toTone = str(input("To tone: "))
 
-if "m" not in fromTone and "m" not in toTone or "m" in fromTone and "m" in toTone:
-    iFromTone = allNotes.index(fromTone)
-    iToTone = allNotes.index(toTone)
+    notes = notes.split(", ")
 
-    semitones = iToTone - iFromTone
+    if "m" not in fromTone and "m" not in toTone or "m" in fromTone and "m" in toTone:
+        iFromTone = allNotes.index(fromTone)
+        iToTone = allNotes.index(toTone)
 
-    notesTransposed = []
+        semitones = iToTone - iFromTone
 
-    for note in notes:
-        iNote = allNotes.index(note)
-        IToNote = iNote + semitones
+        notesTransposed = []
 
-        if IToNote > (len(allNotes) - 1):
-            IToNote = IToNote - len(allNotes)
+        for note in notes:
+            iNote = allNotes.index(note)
+            IToNote = iNote + semitones
 
-        transposedNote = allNotes[IToNote]
-        notesTransposed.append(transposedNote)
+            if IToNote > (len(allNotes) - 1):
+                IToNote = IToNote - len(allNotes)
 
-    print(notesTransposed)
+            transposedNote = allNotes[IToNote]
+            notesTransposed.append(transposedNote)
+
+        print(notesTransposed)
+
+    else:
+        if "m" in fromTone:
+            toTone = relatives[toTone]
+        
+        if "m" in toTone:
+            fromTone = relatives[fromTone]
+
+        iFromTone = allNotes.index(fromTone[:fromTone.find("m")])
+        iToTone = allNotes.index(toTone[:fromTone.find("m")])
+
+        semitones = iToTone - iFromTone
+
+        notesTransposed = []
+
+        for note in notes:
+            iNote = allNotes.index(note)
+            IToNote = iNote + semitones
+
+            if IToNote > (len(allNotes) - 1):
+                IToNote = IToNote - len(allNotes)
+
+            transposedNote = allNotes[IToNote]
+            notesTransposed.append(transposedNote)
+
+        print(notesTransposed)
 
 else:
-    if "m" in fromTone:
-        toTone = relatives[toTone]
-    
-    if "m" in toTone:
-        fromTone = relatives[fromTone]
+    fret = int(input("Capo's fret: "))
 
-    iFromTone = allNotes.index(fromTone[:fromTone.find("m")])
-    iToTone = allNotes.index(toTone[:fromTone.find("m")])
+    notes = str(input("Notes: "))
+    notes = notes.split(", ")
 
-    semitones = iToTone - iFromTone
+    semitones = fret
 
     notesTransposed = []
 
